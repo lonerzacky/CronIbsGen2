@@ -2,6 +2,7 @@ package main
 
 import (
 	"CronIbsGen2/database"
+	"fmt"
 	"github.com/jasonlvhit/gocron"
 	"github.com/joho/godotenv"
 	"log"
@@ -24,6 +25,7 @@ func main() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+	fmt.Println("Starting Services Scheduler IbsGen2")
 	gocron.Every(1).Day().At("01:00").Do(DestroyLogin)
 	<-gocron.Start()
 	s := gocron.NewScheduler()

@@ -5,7 +5,6 @@ import (
 	"github.com/jasonlvhit/gocron"
 	"github.com/joho/godotenv"
 	"log"
-	"os"
 )
 
 //noinspection SqlDialectInspection,SqlNoDataSourceInspection
@@ -25,7 +24,7 @@ func main() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-	gocron.Every(1).Day().At(os.Getenv("PROCESSING_TIME")).Do(DestroyLogin)
+	gocron.Every(1).Day().At("01:00").Do(DestroyLogin)
 	<-gocron.Start()
 	s := gocron.NewScheduler()
 	<-s.Start()

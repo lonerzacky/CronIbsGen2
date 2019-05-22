@@ -14,7 +14,7 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 	fmt.Println("Starting Services Scheduler IbsGen2")
-	gocron.Every(1).Day().At("21:37").Do(scheduler.DestroyLogin)
+	gocron.Every(1).Day().At("21:48").Do(scheduler.DestroyLogin)
 	<-gocron.Start()
 	s := gocron.NewScheduler()
 	<-s.Start()

@@ -1,7 +1,7 @@
 package functions
 
 import (
-	"CronIbsGen2/database"
+	"database/sql"
 	"github.com/vjeantet/jodaTime"
 	"net"
 	"os"
@@ -26,9 +26,8 @@ func GetIpAdd() string {
 }
 
 //noinspection SqlDialectInspection,SqlNoDataSourceInspection
-func InsertLogCron(scheduler string) {
-	var db = database.ConnectDB()
-	stmt, err := db.Prepare("INSERT INTO logcron(scheduler,ip_address, message,tgl_proses) VALUES(?,?,?,?)")
+func InsertLogCron(scheduler string, conn *sql.DB) {
+	stmt, err := conn.Prepare("INSERT INTO logcron(scheduler,ip_address, message,tgl_proses) VALUES(?,?,?,?)")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -36,5 +35,5 @@ func InsertLogCron(scheduler string) {
 	tglProses := jodaTime.Format("YYYY-MM-dd HH:mm:ss", time.Now())
 	stmt.Exec(scheduler, ipAdd, "Successfully Destroy All user", tglProses)
 	//noinspection GoUnhandledErrorResult
-	defer db.Close()
+	defer conn.Close()
 }

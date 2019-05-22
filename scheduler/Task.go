@@ -7,11 +7,13 @@ import (
 	"log"
 )
 
+var conn = database.ConnectDB()
+var connSys = database.ConnectDBSys()
+
 //noinspection SqlDialectInspection,SqlNoDataSourceInspection
 func DestroyLogin() {
-	var dbSys = database.ConnectDBSys()
 	flag := 0
-	stmt, err := dbSys.Prepare("UPDATE sys_daftar_user SET flag=?")
+	stmt, err := connSys.Prepare("UPDATE sys_daftar_user SET flag=?")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -19,9 +21,9 @@ func DestroyLogin() {
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		functions.InsertLogCron("DestroyLogin")
+		functions.InsertLogCron("DestroyLogin", conn)
 		log.Println("Successfully Destroy All user")
 	}
 	//noinspection GoUnhandledErrorResult
-	defer dbSys.Close()
+	defer connSys.Close()
 }

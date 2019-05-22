@@ -2,6 +2,7 @@ package functions
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/vjeantet/jodaTime"
 	"net"
 	"os"
@@ -34,4 +35,13 @@ func InsertLogCron(scheduler string, message string, conn *sql.DB) {
 	ipAdd := GetIpAdd()
 	tglProses := jodaTime.Format("YYYY-MM-dd HH:mm:ss", time.Now())
 	stmt.Exec(scheduler, ipAdd, message, tglProses)
+}
+
+func ParseTimeScheduler(Time string) string {
+	t, err := time.Parse("03:04PM", Time)
+	if err != nil {
+		fmt.Println(err)
+		return ""
+	}
+	return t.Format("12:00")
 }

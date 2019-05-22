@@ -1,11 +1,13 @@
 package main
 
 import (
+	"CronIbsGen2/functions"
 	"CronIbsGen2/scheduler"
 	"fmt"
 	"github.com/jasonlvhit/gocron"
 	"github.com/joho/godotenv"
 	"log"
+	"os"
 )
 
 func main() {
@@ -14,8 +16,9 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 	fmt.Println("Starting Services Scheduler IbsGen2")
-	gocron.Every(1).Day().At("21:48").Do(scheduler.DestroyLogin)
-	gocron.Every(10).Seconds().Do(scheduler.AutoLogin)
+	DestoyLoginTime := functions.ParseTimeScheduler(os.Getenv("DESTROYLOGIN_TIME"))
+	gocron.Every(1).Day().At(string(DestoyLoginTime)).Do(scheduler.DestroyLogin)
+	gocron.Every(1).Day().At(string(DestoyLoginTime)).Do(scheduler.AutoLogin)
 	<-gocron.Start()
 	s := gocron.NewScheduler()
 	<-s.Start()

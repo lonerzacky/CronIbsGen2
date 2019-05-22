@@ -15,6 +15,7 @@ func main() {
 	}
 	fmt.Println("Starting Services Scheduler IbsGen2")
 	gocron.Every(1).Day().At("21:48").Do(scheduler.DestroyLogin)
+	gocron.Every(10).Seconds().Do(scheduler.AutoLogin)
 	<-gocron.Start()
 	s := gocron.NewScheduler()
 	<-s.Start()

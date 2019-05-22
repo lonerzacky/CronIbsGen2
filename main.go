@@ -14,7 +14,7 @@ import (
 
 var db = database.ConnectDB()
 var dbSys = database.ConnectDBSys()
-var message = "Successfully Destroy All user"
+var mDestroyLogin = "Successfully Destroy All user"
 
 //noinspection SqlDialectInspection,SqlNoDataSourceInspection
 func DestroyLogin() {
@@ -28,7 +28,7 @@ func DestroyLogin() {
 		fmt.Println(err.Error())
 	} else {
 		InsertLogCron("DestroyLogin")
-		log.Println(message)
+		log.Println(mDestroyLogin)
 	}
 	//noinspection GoUnhandledErrorResult
 	defer dbSys.Close()
@@ -54,7 +54,7 @@ func InsertLogCron(scheduler string) {
 	}
 	ipAdd := GetIpAdd()
 	tglProses := jodaTime.Format("YYYY-MM-dd HH:mm:ss", time.Now())
-	stmt.Exec(scheduler, ipAdd, message, tglProses)
+	stmt.Exec(scheduler, ipAdd, mDestroyLogin, tglProses)
 	//noinspection GoUnhandledErrorResult
 	defer db.Close()
 }

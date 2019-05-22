@@ -4,3 +4,5 @@ build:
 	CGO_ENABLED=0 GOOS=linux go build -a -tags netgo -ldflags '-w' -o main
 env-init:
 	cp .env.example .env
+run:
+	 nohup ./main &

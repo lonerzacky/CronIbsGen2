@@ -43,5 +43,5 @@ func ParseTimeScheduler(Time string) string {
 		fmt.Println(err)
 		return ""
 	}
-	return t.Format("12:00")
+	return t.Format("15:00")
 }

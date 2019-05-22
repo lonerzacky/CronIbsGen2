@@ -17,6 +17,7 @@ func main() {
 	}
 	fmt.Println("Starting Services Scheduler IbsGen2")
 	DestoyLoginTime := functions.ParseTimeScheduler(os.Getenv("DESTROYLOGIN_TIME"))
+	fmt.Println(string(DestoyLoginTime))
 	gocron.Every(1).Day().At(string(DestoyLoginTime)).Do(scheduler.DestroyLogin)
 	gocron.Every(1).Day().At(string(DestoyLoginTime)).Do(scheduler.AutoLogin)
 	<-gocron.Start()

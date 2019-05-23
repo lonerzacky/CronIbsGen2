@@ -17,7 +17,7 @@ func main() {
 	DestoyLoginTime := functions.ParseTimeScheduler(os.Getenv("DESTROYLOGIN_TIME"))
 	functions.Logger().Info("Starting Scheduler IbsGen2")
 	gocron.Every(1).Day().At(string(DestoyLoginTime)).Do(scheduler.DestroyLogin)
-	gocron.Every(1).Day().At(string(DestoyLoginTime)).Do(scheduler.AutoLogin)
+	//gocron.Every(1).Day().At(string(DestoyLoginTime)).Do(scheduler.AutoLogin)
 	<-gocron.Start()
 	s := gocron.NewScheduler()
 	<-s.Start()

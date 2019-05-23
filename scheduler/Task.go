@@ -5,14 +5,24 @@ import (
 	"CronIbsGen2/functions"
 	"fmt"
 	"github.com/parnurzeal/gorequest"
+	"github.com/vjeantet/jodaTime"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 var conn = database.ConnectDB()
 var connSys = database.ConnectDBSys()
+var dateNowYmd = jodaTime.Format("YYYYMMdd", time.Now())
+
+type ProsesIntervalHarian struct {
+	TglAwal     string `json:"tgl_awal"`
+	TglAkhir    string `json:"tgl_akhir"`
+	JenisProduk string `json:"jenis_produk"`
+	KodeKantor  string `json:"kode_kantor"`
+}
 
 //noinspection SqlDialectInspection,SqlNoDataSourceInspection
 func DestroyLogin() {
@@ -31,11 +41,18 @@ func DestroyLogin() {
 	}
 }
 
-func AutoLogin() {
+func IntervalHarianDeposito() {
+	functions.Logger().Info("Starting Interval Harian Deposito")
+	jsonData := ProsesIntervalHarian{
+		TglAwal:     dateNowYmd,
+		TglAkhir:    dateNowYmd,
+		JenisProduk: "deposito",
+		KodeKantor:  "",
+	}
 	request := gorequest.New()
-	resp, _, _ := request.Post(""+os.Getenv("IP_SERVICE")+"/010000").
+	resp, _, _ := request.Post(""+os.Getenv("IP_SERVICE_HARIAN_AKHIR")+"/09003").
 		Set("Content-Type", "application/json").
-		Send(`{"username":"USSI","password":"7376cbab0e92be1a14377f15202424ecde2fbf5f","kode_kantor":""}`).
+		Send(jsonData).
 		End()
 	fmt.Println(resp.Body)
 	if resp.StatusCode == http.StatusOK {
@@ -44,6 +61,7 @@ func AutoLogin() {
 			log.Fatal(err)
 		}
 		bodyString := string(bodyBytes)
-		functions.InsertLogCron("AutoLogin", bodyString, conn)
+		functions.InsertLogCron("IntervalHarianDeposito", bodyString, conn)
+		functions.Logger().Info("Successfully Processing Interval Deposito")
 	}
 }

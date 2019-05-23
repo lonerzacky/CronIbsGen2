@@ -16,6 +16,7 @@ var connSys = database.ConnectDBSys()
 
 //noinspection SqlDialectInspection,SqlNoDataSourceInspection
 func DestroyLogin() {
+	functions.Logger().Info("Starting Destory User Login")
 	flag := 0
 	stmt, err := connSys.Prepare("UPDATE sys_daftar_user SET flag=?")
 	if err != nil {
@@ -25,8 +26,8 @@ func DestroyLogin() {
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		functions.InsertLogCron("DestroyLogin", "Successfully Destroy All user", conn)
-		log.Println("Successfully Destroy All user")
+		functions.InsertLogCron("DestroyLogin", "Successfully Destroy All User Login", conn)
+		functions.Logger().Info("Successfully Destroy All User Login")
 	}
 }
 

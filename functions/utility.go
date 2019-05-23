@@ -38,7 +38,7 @@ func InsertLogCron(scheduler string, message string, conn *sql.DB) {
 }
 
 func ParseTimeScheduler(Time string) string {
-	t, err := time.Parse("03:04PM", Time)
+	t, err := time.Parse("15:04", Time)
 	if err != nil {
 		fmt.Println(err)
 		return ""

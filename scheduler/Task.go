@@ -63,6 +63,8 @@ func IntervalHarianTabungan() {
 		bodyString := string(bodyBytes)
 		functions.InsertLogCron("IntervalHarianTabungan", bodyString, conn)
 		functions.Logger().Info("Successfully Processing Interval Tabungan")
+	} else {
+		functions.Logger().Error("An Error Occured, Service is Not Running or Timeout")
 	}
 }
 
@@ -88,6 +90,8 @@ func IntervalHarianDeposito() {
 		bodyString := string(bodyBytes)
 		functions.InsertLogCron("IntervalHarianDeposito", bodyString, conn)
 		functions.Logger().Info("Successfully Processing Interval Deposito")
+	} else {
+		functions.Logger().Error("An Error Occured, Service is Not Running or Timeout")
 	}
 }
 
@@ -113,6 +117,8 @@ func IntervalHarianKredit() {
 		bodyString := string(bodyBytes)
 		functions.InsertLogCron("IntervalHarianKredit", bodyString, conn)
 		functions.Logger().Info("Successfully Processing Interval Kredit")
+	} else {
+		functions.Logger().Error("An Error Occured, Service is Not Running or Timeout")
 	}
 }
 
@@ -138,6 +144,8 @@ func IntervalHarianABP() {
 		bodyString := string(bodyBytes)
 		functions.InsertLogCron("IntervalHarianABP", bodyString, conn)
 		functions.Logger().Info("Successfully Processing Interval ABP")
+	} else {
+		functions.Logger().Error("An Error Occured, Service is Not Running or Timeout")
 	}
 }
 
@@ -163,6 +171,8 @@ func IntervalHarianAkunting() {
 		bodyString := string(bodyBytes)
 		functions.InsertLogCron("IntervalHarianAkunting", bodyString, conn)
 		functions.Logger().Info("Successfully Processing Interval Akunting")
+	} else {
+		functions.Logger().Error("An Error Occured, Service is Not Running or Timeout")
 	}
 }
 
@@ -188,6 +198,8 @@ func IntervalHarianInventaris() {
 		bodyString := string(bodyBytes)
 		functions.InsertLogCron("IntervalHarianInventaris", bodyString, conn)
 		functions.Logger().Info("Successfully Processing Interval Inventaris")
+	} else {
+		functions.Logger().Error("An Error Occured, Service is Not Running or Timeout")
 	}
 }
 
@@ -213,5 +225,7 @@ func IntervalHarianABA() {
 		bodyString := string(bodyBytes)
 		functions.InsertLogCron("IntervalHarianABA", bodyString, conn)
 		functions.Logger().Info("Successfully Processing Interval ABA")
+	} else {
+		functions.Logger().Error("An Error Occured, Service is Not Running or Timeout")
 	}
 }

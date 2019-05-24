@@ -34,7 +34,7 @@ func DestroyLogin() {
 	}
 	_, err = stmt.Exec(flag)
 	if err != nil {
-		fmt.Println(err.Error())
+		functions.Logger().Error(err.Error())
 	} else {
 		functions.InsertLogCron("DestroyLogin", "Successfully Destroy All User Login", conn)
 		functions.Logger().Info("Successfully Destroy All User Login")

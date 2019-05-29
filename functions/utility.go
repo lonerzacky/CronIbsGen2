@@ -33,10 +33,10 @@ func InsertLogCron(scheduler string, message string, conn *sql.DB) {
 	if err != nil {
 		panic(err.Error())
 	}
+	defer stmt.Close()
 	ipAdd := GetIpAdd()
 	tglProses := jodaTime.Format("YYYY-MM-dd HH:mm:ss", time.Now())
 	stmt.Exec(scheduler, ipAdd, message, tglProses)
-	defer stmt.Close()
 }
 
 func ParseTimeScheduler(Time string) string {

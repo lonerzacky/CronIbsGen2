@@ -32,8 +32,8 @@ func DestroyLogin() {
 	if err != nil {
 		panic(err.Error())
 	}
-	_, err = stmt.Exec(flag)
 	defer stmt.Close()
+	_, err = stmt.Exec(flag)
 	if err != nil {
 		functions.Logger().Error(err.Error())
 	} else {

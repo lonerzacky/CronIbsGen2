@@ -7,7 +7,6 @@ import (
 	"github.com/parnurzeal/gorequest"
 	"github.com/vjeantet/jodaTime"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"time"
@@ -30,7 +29,10 @@ func DestroyLogin() {
 	flag := 0
 	stmt, err := connSys.Prepare("UPDATE sys_daftar_user SET flag=?")
 	if err != nil {
-		panic(err.Error())
+		//panic(err.Error())
+		functions.Logger().Error(err.Error())
+		functions.InsertLogCron("DestroyLogin", err.Error(), conn)
+		return
 	}
 	defer stmt.Close()
 	_, err = stmt.Exec(flag)
@@ -59,7 +61,9 @@ func IntervalHarianTabungan() {
 	if resp.StatusCode == http.StatusOK {
 		bodyBytes, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			log.Fatal(err)
+			functions.Logger().Error(err.Error())
+			functions.InsertLogCron("IntervalHarianTabungan", err.Error(), conn)
+			return
 		}
 		bodyString := string(bodyBytes)
 		functions.InsertLogCron("IntervalHarianTabungan", bodyString, conn)
@@ -86,7 +90,9 @@ func IntervalHarianDeposito() {
 	if resp.StatusCode == http.StatusOK {
 		bodyBytes, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			log.Fatal(err)
+			functions.Logger().Error(err.Error())
+			functions.InsertLogCron("IntervalHarianDeposito", err.Error(), conn)
+			return
 		}
 		bodyString := string(bodyBytes)
 		functions.InsertLogCron("IntervalHarianDeposito", bodyString, conn)
@@ -113,7 +119,9 @@ func IntervalHarianKredit() {
 	if resp.StatusCode == http.StatusOK {
 		bodyBytes, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			log.Fatal(err)
+			functions.Logger().Error(err.Error())
+			functions.InsertLogCron("IntervalHarianKredit", err.Error(), conn)
+			return
 		}
 		bodyString := string(bodyBytes)
 		functions.InsertLogCron("IntervalHarianKredit", bodyString, conn)
@@ -140,7 +148,9 @@ func IntervalHarianABP() {
 	if resp.StatusCode == http.StatusOK {
 		bodyBytes, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			log.Fatal(err)
+			functions.Logger().Error(err.Error())
+			functions.InsertLogCron("IntervalHarianABP", err.Error(), conn)
+			return
 		}
 		bodyString := string(bodyBytes)
 		functions.InsertLogCron("IntervalHarianABP", bodyString, conn)
@@ -167,7 +177,9 @@ func IntervalHarianAkunting() {
 	if resp.StatusCode == http.StatusOK {
 		bodyBytes, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			log.Fatal(err)
+			functions.Logger().Error(err.Error())
+			functions.InsertLogCron("IntervalHarianAkunting", err.Error(), conn)
+			return
 		}
 		bodyString := string(bodyBytes)
 		functions.InsertLogCron("IntervalHarianAkunting", bodyString, conn)
@@ -194,7 +206,9 @@ func IntervalHarianInventaris() {
 	if resp.StatusCode == http.StatusOK {
 		bodyBytes, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			log.Fatal(err)
+			functions.Logger().Error(err.Error())
+			functions.InsertLogCron("IntervalHarianInventaris", err.Error(), conn)
+			return
 		}
 		bodyString := string(bodyBytes)
 		functions.InsertLogCron("IntervalHarianInventaris", bodyString, conn)
@@ -221,7 +235,9 @@ func IntervalHarianABA() {
 	if resp.StatusCode == http.StatusOK {
 		bodyBytes, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			log.Fatal(err)
+			functions.Logger().Error(err.Error())
+			functions.InsertLogCron("IntervalHarianABA", err.Error(), conn)
+			return
 		}
 		bodyString := string(bodyBytes)
 		functions.InsertLogCron("IntervalHarianABA", bodyString, conn)

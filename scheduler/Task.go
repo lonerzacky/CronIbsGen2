@@ -3,6 +3,7 @@ package scheduler
 import (
 	"CronIbsGen2/database"
 	"CronIbsGen2/functions"
+	"encoding/json"
 	"fmt"
 	"github.com/parnurzeal/gorequest"
 	"github.com/vjeantet/jodaTime"
@@ -31,7 +32,7 @@ func DestroyLogin() {
 	if err != nil {
 		//panic(err.Error())
 		functions.Logger().Error(err.Error())
-		functions.InsertLogCron("DestroyLogin", err.Error(), conn)
+		functions.InsertLogCron("DestroyLogin", "", err.Error(), conn)
 		return
 	}
 	defer stmt.Close()
@@ -39,7 +40,7 @@ func DestroyLogin() {
 	if err != nil {
 		functions.Logger().Error(err.Error())
 	} else {
-		functions.InsertLogCron("DestroyLogin", "Successfully Destroy All User Login", conn)
+		functions.InsertLogCron("DestroyLogin", "", "Successfully Destroy All User Login", conn)
 		functions.Logger().Info("Successfully Destroy All User Login")
 	}
 }
@@ -52,6 +53,7 @@ func IntervalHarianTabungan() {
 		JenisProduk: "tabungan",
 		KodeKantor:  "",
 	}
+	requestParams, _ := json.Marshal(jsonData)
 	request := gorequest.New()
 	resp, _, _ := request.Post(""+os.Getenv("IP_SERVICE_HARIAN_AKHIR")+"/09003").
 		Set("Content-Type", "application/json").
@@ -62,11 +64,11 @@ func IntervalHarianTabungan() {
 		bodyBytes, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
 			functions.Logger().Error(err.Error())
-			functions.InsertLogCron("IntervalHarianTabungan", err.Error(), conn)
+			functions.InsertLogCron("IntervalHarianTabungan", string(requestParams), err.Error(), conn)
 			return
 		}
 		bodyString := string(bodyBytes)
-		functions.InsertLogCron("IntervalHarianTabungan", bodyString, conn)
+		functions.InsertLogCron("IntervalHarianTabungan", string(requestParams), bodyString, conn)
 		functions.Logger().Info("Successfully Processing Interval Tabungan")
 	} else {
 		functions.Logger().Error("An Error Occured, Service is Not Running or Timeout")
@@ -81,6 +83,7 @@ func IntervalHarianDeposito() {
 		JenisProduk: "deposito",
 		KodeKantor:  "",
 	}
+	requestParams, _ := json.Marshal(jsonData)
 	request := gorequest.New()
 	resp, _, _ := request.Post(""+os.Getenv("IP_SERVICE_HARIAN_AKHIR")+"/09003").
 		Set("Content-Type", "application/json").
@@ -91,11 +94,11 @@ func IntervalHarianDeposito() {
 		bodyBytes, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
 			functions.Logger().Error(err.Error())
-			functions.InsertLogCron("IntervalHarianDeposito", err.Error(), conn)
+			functions.InsertLogCron("IntervalHarianDeposito", string(requestParams), err.Error(), conn)
 			return
 		}
 		bodyString := string(bodyBytes)
-		functions.InsertLogCron("IntervalHarianDeposito", bodyString, conn)
+		functions.InsertLogCron("IntervalHarianDeposito", string(requestParams), bodyString, conn)
 		functions.Logger().Info("Successfully Processing Interval Deposito")
 	} else {
 		functions.Logger().Error("An Error Occured, Service is Not Running or Timeout")
@@ -110,6 +113,7 @@ func IntervalHarianKredit() {
 		JenisProduk: "kredit",
 		KodeKantor:  "",
 	}
+	requestParams, _ := json.Marshal(jsonData)
 	request := gorequest.New()
 	resp, _, _ := request.Post(""+os.Getenv("IP_SERVICE_HARIAN_AKHIR")+"/09003").
 		Set("Content-Type", "application/json").
@@ -120,11 +124,11 @@ func IntervalHarianKredit() {
 		bodyBytes, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
 			functions.Logger().Error(err.Error())
-			functions.InsertLogCron("IntervalHarianKredit", err.Error(), conn)
+			functions.InsertLogCron("IntervalHarianKredit", string(requestParams), err.Error(), conn)
 			return
 		}
 		bodyString := string(bodyBytes)
-		functions.InsertLogCron("IntervalHarianKredit", bodyString, conn)
+		functions.InsertLogCron("IntervalHarianKredit", string(requestParams), bodyString, conn)
 		functions.Logger().Info("Successfully Processing Interval Kredit")
 	} else {
 		functions.Logger().Error("An Error Occured, Service is Not Running or Timeout")
@@ -139,6 +143,7 @@ func IntervalHarianABP() {
 		JenisProduk: "abp",
 		KodeKantor:  "",
 	}
+	requestParams, _ := json.Marshal(jsonData)
 	request := gorequest.New()
 	resp, _, _ := request.Post(""+os.Getenv("IP_SERVICE_HARIAN_AKHIR")+"/09003").
 		Set("Content-Type", "application/json").
@@ -149,11 +154,11 @@ func IntervalHarianABP() {
 		bodyBytes, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
 			functions.Logger().Error(err.Error())
-			functions.InsertLogCron("IntervalHarianABP", err.Error(), conn)
+			functions.InsertLogCron("IntervalHarianABP", string(requestParams), err.Error(), conn)
 			return
 		}
 		bodyString := string(bodyBytes)
-		functions.InsertLogCron("IntervalHarianABP", bodyString, conn)
+		functions.InsertLogCron("IntervalHarianABP", string(requestParams), bodyString, conn)
 		functions.Logger().Info("Successfully Processing Interval ABP")
 	} else {
 		functions.Logger().Error("An Error Occured, Service is Not Running or Timeout")
@@ -168,6 +173,7 @@ func IntervalHarianAkunting() {
 		JenisProduk: "akunting",
 		KodeKantor:  "",
 	}
+	requestParams, _ := json.Marshal(jsonData)
 	request := gorequest.New()
 	resp, _, _ := request.Post(""+os.Getenv("IP_SERVICE_HARIAN_AKHIR")+"/09003").
 		Set("Content-Type", "application/json").
@@ -178,11 +184,11 @@ func IntervalHarianAkunting() {
 		bodyBytes, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
 			functions.Logger().Error(err.Error())
-			functions.InsertLogCron("IntervalHarianAkunting", err.Error(), conn)
+			functions.InsertLogCron("IntervalHarianAkunting", string(requestParams), err.Error(), conn)
 			return
 		}
 		bodyString := string(bodyBytes)
-		functions.InsertLogCron("IntervalHarianAkunting", bodyString, conn)
+		functions.InsertLogCron("IntervalHarianAkunting", string(requestParams), bodyString, conn)
 		functions.Logger().Info("Successfully Processing Interval Akunting")
 	} else {
 		functions.Logger().Error("An Error Occured, Service is Not Running or Timeout")
@@ -197,6 +203,7 @@ func IntervalHarianInventaris() {
 		JenisProduk: "inventaris",
 		KodeKantor:  "",
 	}
+	requestParams, _ := json.Marshal(jsonData)
 	request := gorequest.New()
 	resp, _, _ := request.Post(""+os.Getenv("IP_SERVICE_HARIAN_AKHIR")+"/09003").
 		Set("Content-Type", "application/json").
@@ -207,11 +214,11 @@ func IntervalHarianInventaris() {
 		bodyBytes, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
 			functions.Logger().Error(err.Error())
-			functions.InsertLogCron("IntervalHarianInventaris", err.Error(), conn)
+			functions.InsertLogCron("IntervalHarianInventaris", string(requestParams), err.Error(), conn)
 			return
 		}
 		bodyString := string(bodyBytes)
-		functions.InsertLogCron("IntervalHarianInventaris", bodyString, conn)
+		functions.InsertLogCron("IntervalHarianInventaris", string(requestParams), bodyString, conn)
 		functions.Logger().Info("Successfully Processing Interval Inventaris")
 	} else {
 		functions.Logger().Error("An Error Occured, Service is Not Running or Timeout")
@@ -226,6 +233,7 @@ func IntervalHarianABA() {
 		JenisProduk: "aba",
 		KodeKantor:  "",
 	}
+	requestParams, _ := json.Marshal(jsonData)
 	request := gorequest.New()
 	resp, _, _ := request.Post(""+os.Getenv("IP_SERVICE_HARIAN_AKHIR")+"/09003").
 		Set("Content-Type", "application/json").
@@ -236,11 +244,11 @@ func IntervalHarianABA() {
 		bodyBytes, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
 			functions.Logger().Error(err.Error())
-			functions.InsertLogCron("IntervalHarianABA", err.Error(), conn)
+			functions.InsertLogCron("IntervalHarianABA", string(requestParams), err.Error(), conn)
 			return
 		}
 		bodyString := string(bodyBytes)
-		functions.InsertLogCron("IntervalHarianABA", bodyString, conn)
+		functions.InsertLogCron("IntervalHarianABA", string(requestParams), bodyString, conn)
 		functions.Logger().Info("Successfully Processing Interval ABA")
 	} else {
 		functions.Logger().Error("An Error Occured, Service is Not Running or Timeout")

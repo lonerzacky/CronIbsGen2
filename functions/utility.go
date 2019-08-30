@@ -28,15 +28,15 @@ func GetIpAdd() string {
 }
 
 //noinspection SqlDialectInspection,SqlNoDataSourceInspection
-func InsertLogCron(scheduler string, message string, conn *sql.DB) {
-	stmt, err := conn.Prepare("INSERT INTO logcron(scheduler,ip_address, message,tgl_proses) VALUES(?,?,?,?)")
+func InsertLogCron(scheduler string, request string, message string, conn *sql.DB) {
+	stmt, err := conn.Prepare("INSERT INTO logcron(scheduler,ip_address,request,message,tgl_proses) VALUES(?,?,?,?,?)")
 	if err != nil {
 		panic(err.Error())
 	}
 	defer stmt.Close()
 	ipAdd := GetIpAdd()
 	tglProses := jodaTime.Format("YYYY-MM-dd HH:mm:ss", time.Now())
-	stmt.Exec(scheduler, ipAdd, message, tglProses)
+	stmt.Exec(scheduler, ipAdd, request, message, tglProses)
 }
 
 func ParseTimeScheduler(Time string) string {
